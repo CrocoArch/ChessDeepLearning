@@ -1,0 +1,25 @@
+Rules
+
+Here are rules that have to be respected and that
+we have taken in consideration
+
+Board: must be a 8x8 cells square 
+
+Movings:
+
+-White always first to move
+-No legal moves available = draw
+-excepting knight, pieces can not pas over/through other pieces
+-if king is in check it MUST be moved in a position that eliminate the threats
+-light queen on light cell and dark queen on dark cell
+
+-KING : one square in every direction and can do CASTLING
+-QUEEN : any vacant cells in every directions
+-ROOK : any vacant cells horizontally or vertically
+-BISHOP : any vacant cells in any diagonal direction
+-KNIGHT : any L movement of 3 cells
+-PAWNS : one square forward (if it's its first move it can be moved 2 squares forward)
+         it can not move backward 
+         it can capture in forward diagonals
+
+
