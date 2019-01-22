@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define clear() printf("\033[H\033[J")
+
 //////////////////
 //Board of chess//
 //////////////////
@@ -43,46 +45,79 @@ void init()
 	board[0][5] = 4;
 	board[0][6] = 3;
 	board[0][7] = 2;
-	board[7][0] = 2;
-	board[7][1] = 3;
-	board[7][2] = 4;
-	board[7][3] = 5;
-	board[7][4] = 6;
-	board[7][5] = 4;
-	board[7][6] = 3;
-	board[7][7] = 2;
+	board[7][0] = 12;
+	board[7][1] = 13;
+	board[7][2] = 14;
+	board[7][3] = 15;
+	board[7][4] = 16;
+	board[7][5] = 14;
+	board[7][6] = 13;
+	board[7][7] = 12;
 
 }
 
+char * pawn(int p)
+{
+	switch(p)
+	{
+		case -1:
+			return ";42m   ";
+		case 0:
+			return "m   ";
+		case 1:
+			return ";34m P ";
+		case 11:
+			return ";31m P ";
+		case 2:
+			return ";34m R ";
+		case 12:
+			return ";31m R ";
+		case 3:
+			return ";34m K ";
+		case 13:
+			return ";31m K ";
+		case 4:
+			return ";34m B ";
+		case 14:
+			return ";31m B ";
+		case 5:
+			return ";34m Q ";
+		case 15:
+			return ";31m Q ";
+		case 6:
+			return ";34m K ";
+		case 16:
+			return ";31m K ";
+	}
+
+	return " ";
+}
+
+
 void printBoard()
 {
-	printf(" ");
-	char c = 65;
-	/*for(int i = 0; i < 8; i++)
-	{
-		printf(" %s ", c);
-		c++;
-	}*/
-	
-	for(int i=1;i<=8;i++)
+	int cellcolor = 0; //0 = white & 1 = black
+	for(int i=0;i<8;i++)
+    {
+		for(int j=0;j<8;j++)
         {
-          for(int j=0;j<8;j++)
-          {
-             printf("\xDB");
-             printf(" ");
-           }
-             printf("\n");
-             if(i%2==0)
-             {
-                printf(" ");
-             }
-        }
-printf("\033[031;43m This text is red with yellow background \033[0m This text has default color\n");
+			char * c = pawn(board[i][j]);
+			if(cellcolor == 0)
+				printf("\033[47%s",c);
+			else
+				printf("\033[0%s",c); 
+			cellcolor = cellcolor == 0 ? 1 : 0;
+		}
+		
+		printf("\033[0m\n");
+		cellcolor = cellcolor == 0 ? 1 : 0;
+	}
 }
 
 int main()
 {
 	init();
+	clear();
 	printBoard();
 	free(board);
 }
