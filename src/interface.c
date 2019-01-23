@@ -19,10 +19,10 @@ int ** board;
 
 void createBoard()
 {
-	board = malloc(8 * sizeof(int *)); //malloc the board
+	board = malloc(9 * sizeof(int *)); //malloc the board
 	for (size_t i = 0; i < 8; i++)
 	{
-		board[i] = malloc(8 * sizeof(int));
+		board[i] = malloc(9 * sizeof(int));
 		for(size_t j = 0; j < 8; j++)
 			board[i][j] = 0;						
 	}
@@ -31,28 +31,28 @@ void createBoard()
 void init()
 {
 	createBoard();
-	for(int i = 0; i < 8; i++)
+	for(int i = 1; i < 9; i++)
 	{
 		board[1][i] = 1;
 		board[6][i] = 11;
 	}
 
-	board[0][0] = 2;
-	board[0][1] = 3;
-	board[0][2] = 4;
-	board[0][3] = 6;
-	board[0][4] = 5;
-	board[0][5] = 4;
-	board[0][6] = 3;
-	board[0][7] = 2;
-	board[7][0] = 12;
-	board[7][1] = 13;
-	board[7][2] = 14;
-	board[7][3] = 15;
-	board[7][4] = 16;
-	board[7][5] = 14;
-	board[7][6] = 13;
-	board[7][7] = 12;
+	board[0][1] = 2;
+	board[0][2] = 3;
+	board[0][3] = 4;
+	board[0][4] = 6;
+	board[0][5] = 5;
+	board[0][6] = 4;
+	board[0][7] = 3;
+	board[0][8] = 2;
+	board[7][1] = 12;
+	board[7][2] = 13;
+	board[7][3] = 14;
+	board[7][4] = 15;
+	board[7][5] = 16;
+	board[7][6] = 14;
+	board[7][7] = 13;
+	board[7][8] = 12;
 
 }
 
@@ -73,9 +73,9 @@ char * pawn(int p)
 		case 12:
 			return ";31m R ";
 		case 3:
-			return ";34m K ";
+			return ";34m C ";
 		case 13:
-			return ";31m K ";
+			return ";31m C ";
 		case 4:
 			return ";34m B ";
 		case 14:
@@ -96,17 +96,35 @@ char * pawn(int p)
 
 void printBoard()
 {
-	int cellcolor = 0; //0 = white & 1 = black
-	for(int i=0;i<8;i++)
+	int cellcolor = 0;//0 = white & 1 = black
+    char number = 49;
+	for(int i=0;i<9;i++)
     {
-		for(int j=0;j<8;j++)
+		for(int j=0;j<9;j++)
         {
-			char * c = pawn(board[i][j]);
-			if(cellcolor == 0)
-				printf("\033[47%s",c);
-			else
-				printf("\033[0%s",c); 
-			cellcolor = cellcolor == 0 ? 1 : 0;
+            if (j == 0 && i<8){
+                printf(" %c ",number);
+                number +=1;
+            }
+
+            else
+            {
+			    if (i == 8){
+                    if(j == 0)
+                        printf("   ");
+                    else
+                        printf(" %c ",73-j);
+                }
+                else
+                {
+                    char * c = pawn(board[i][j]);
+			        if(cellcolor == 0)
+				        printf("\033[47%s",c);
+			        else
+				        printf("\033[0%s",c); 
+			        cellcolor = cellcolor == 0 ? 1 : 0;
+                }
+            }
 		}
 		
 		printf("\033[0m\n");
@@ -114,7 +132,7 @@ void printBoard()
 	}
 }
 
-int main()
+void displayBoard()
 {
 	init();
 	clear();
