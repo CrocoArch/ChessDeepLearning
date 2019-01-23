@@ -61,33 +61,33 @@ char * pawn(int p)
 	switch(p)
 	{
 		case -1:
-			return ";42m   ";
+			return ";42m       ";
 		case 0:
-			return "m   ";
+			return "m       ";
 		case 1:
-			return ";34m P ";
+			return ";34m Pawn  ";
 		case 11:
-			return ";31m P ";
+			return ";31m Pawn  ";
 		case 2:
-			return ";34m R ";
+			return ";34m Rook  ";
 		case 12:
-			return ";31m R ";
+			return ";31m Rook  ";
 		case 3:
-			return ";34m C ";
+			return ";34m Horse ";
 		case 13:
-			return ";31m C ";
+			return ";31m Horse ";
 		case 4:
-			return ";34m B ";
+			return ";34m Bishop";
 		case 14:
-			return ";31m B ";
+			return ";31m Bishop";
 		case 5:
-			return ";34m Q ";
+			return ";34m Queen ";
 		case 15:
-			return ";31m Q ";
+			return ";31m Queen ";
 		case 6:
-			return ";34m K ";
+			return ";34m  King ";
 		case 16:
-			return ";31m K ";
+			return ";31m  King ";
 	}
 
 	return " ";
@@ -96,38 +96,48 @@ char * pawn(int p)
 
 void printBoard()
 {
+	int isLine = 0; //tell if we are on new line of board
 	int cellcolor = 0;//0 = white & 1 = black
-    char number = 49;
-	for(int i=0;i<9;i++)
+	printf("\033[0m          H      G      F      E      D      C      B      A \n");
+	for(int i=0;i<8;i++)
     {
-		for(int j=0;j<9;j++)
+		for(int k=0;k<3;k++)
         {
-            if (j == 0 && i<8){
-                printf(" %c ",number);
-                number +=1;
-            }
+			for(int j = 0; j < 9; j++) //line per case
+			{
+				if(j == 0)
+				{
+					if(k == 1)
+						printf("\033[0m   %d   ",i);
+					else
+						printf("\033[0m       ");
+				}
+				else
+				{
+					if(k == 1)
+					{
+						char * c = pawn(board[i][j]);
+						if(cellcolor == 0)
+							printf("\033[47%s",c);
+						else
+							printf("\033[0%s",c); 
+						cellcolor = cellcolor == 0 ? 1 : 0;
+					}
+					else
+					{
+						if(cellcolor == 0)
+							printf("\033[47m       ");
+						else
+							printf("\033[0m       ");
+						cellcolor = cellcolor == 0 ? 1 : 0;
+					}
+				}
 
-            else
-            {
-			    if (i == 8){
-                    if(j == 0)
-                        printf("   ");
-                    else
-                        printf(" %c ",73-j);
-                }
-                else
-                {
-                    char * c = pawn(board[i][j]);
-			        if(cellcolor == 0)
-				        printf("\033[47%s",c);
-			        else
-				        printf("\033[0%s",c); 
-			        cellcolor = cellcolor == 0 ? 1 : 0;
-                }
-            }
-		}
-		
-		printf("\033[0m\n");
+			}
+			printf("\n");
+
+		}	
+	//	printf("\033[0m\n");
 		cellcolor = cellcolor == 0 ? 1 : 0;
 	}
 }
