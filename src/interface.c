@@ -6,7 +6,6 @@
 //////////////////
 //Board of chess//
 //////////////////
-int ** board;
 //0 = available cell
 //>0 = occuped cell
 //<0 = accessible cell
@@ -17,20 +16,21 @@ int ** board;
 //5 & 15 = white & black queens
 //6 & 16 = white & black kings
 
-void createBoard()
+int ** createBoard()
 {
-	board = malloc(9 * sizeof(int *)); //malloc the board
+	int ** board = malloc(9 * sizeof(int *)); //malloc the board
 	for (size_t i = 0; i < 8; i++)
 	{
 		board[i] = malloc(9 * sizeof(int));
 		for(size_t j = 0; j < 8; j++)
 			board[i][j] = 0;						
 	}
+	return board;
 }
 
-void init()
+int **  init()
 {
-	createBoard();
+	int ** board = createBoard();
 	for(int i = 1; i < 9; i++)
 	{
 		board[1][i] = 1;
@@ -53,6 +53,8 @@ void init()
 	board[7][6] = 14;
 	board[7][7] = 13;
 	board[7][8] = 12;
+
+	return board;
 
 }
 
@@ -94,8 +96,9 @@ char * pawn(int p)
 }
 
 
-void printBoard()
+void printBoard(int ** board)
 {
+	clear();
 	int isLine = 0; //tell if we are on new line of board
 	int cellcolor = 0;//0 = white & 1 = black
 	printf("\033[0m          H      G      F      E      D      C      B      A \n");
@@ -125,11 +128,17 @@ void printBoard()
 					}
 					else
 					{
-						if(cellcolor == 0)
-							printf("\033[47m       ");
+						if(board[i][j] == -1)
+							printf("\033[42m       ");
 						else
-							printf("\033[0m       ");
-						cellcolor = cellcolor == 0 ? 1 : 0;
+						{
+							if(cellcolor == 0)
+								printf("\033[47m       ");
+							else
+								printf("\033[0m       ");
+						}
+
+					cellcolor = cellcolor == 0 ? 1 : 0;
 					}
 				}
 
@@ -140,12 +149,16 @@ void printBoard()
 	//	printf("\033[0m\n");
 		cellcolor = cellcolor == 0 ? 1 : 0;
 	}
+	printf("\033[0m\n");
+	printf("\033[0m\n");
 }
 
-void displayBoard()
+
+int ** initBoard()
 {
-	init();
+	int ** board = init();
 	clear();
-	printBoard();
-	free(board);
+	printBoard(board);
+	return board;
+	//free(board);
 }
