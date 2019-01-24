@@ -5,7 +5,7 @@ int moving(int ** board, int i, int j, int x, int y);
 
 int move(int ** board, int i, int j);
 
-int moveCheck(int ** board, int board);
+int moveCheck(int ** board, int team);
 
 void turn(int ** board,int team);
 

@@ -12,7 +12,7 @@ int moving(int ** board, int i, int j, int x, int y)
     }
     else
     {
-        wrongCell();
+        printf("This cell can not be choosen!\n");
         return 0;
     }
 }
@@ -37,7 +37,9 @@ int move(int ** board, int i, int j)
     return 0;
 }
 
-int moveCheck(int ** board, int board){}
+int moveCheck(int ** board, int team){
+    return 0;
+}
 
 void turn(int ** board,int team)
 {
@@ -52,7 +54,7 @@ void turn(int ** board,int team)
         scanf("%i%c",&pos1,&pos2);
         printf("%i , %c\n",pos1,pos2);
         if (0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73)
-            printf("caca");
+            printf("Out of board!");
         else
         {
             move(board,pos1,72-pos2);
@@ -74,10 +76,10 @@ void turn(int ** board,int team)
 void game(int ** board)
 {
     printf("White always starts!\n");
-    while(!check&mat(board,1)) 
+    while(!checkANDmat(board,1)) 
     {
         turn(board,1);
-        if(check&mat(board,0))
+        if(checkANDmat(board,0))
             break;
         turn(board,0);
     }

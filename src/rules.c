@@ -35,31 +35,41 @@ int check(int ** board, int team){
         return 0;
 }
 
-int * check&mat(int ** board, int team){
+int * checkANDmat(int ** board, int team){
     int * val = calloc(8,sizeof(int));
     int index = 0;
-    if(check){
+    if(check(board,team)){
         int pos = searchKing(board,team);
         for(int i = -1;i<= 1;i++){
-            for(int j = -1; j<= 1){
+            for(int j = -1; j<= 1;j++){
                 if(i != 0 && j!=0){
                     if(board[pos/10+i][pos%10+j]==0){
                         val[index]= pos+(i*10)+j;
-                        index += 1; 
-                        return 0;
+                        index += 1;
                     }
                     else {
                         if(board[pos/10+i][pos%10+j]/10 != team){
-                            val[index]= pos+(i*10)+j;
-                            index += 1; 
-                            return 0;
+                            
+                            board[pos/10-i][pos%10+j] = 0;
+                            team = team ? 0:1;
+                            for(int i =0;i<8;i++){
+                                for(int j = 0;j<8; j++){
+                                    if (board[i][j]/10 == team)
+                                        move(board,i,j);
+                                }
+                            }
+                            if(board[pos/10][pos%10] >= 0)
+                            {
+                                val[index]= pos+(i*10)+j;
+                                index += 1;
+                            }
                         }
                     }
                 }
             }
         }
         //TODO case when other pieces can eliminate the threat
-        return 1;
+        return val;
     }
     else
         return 0;
