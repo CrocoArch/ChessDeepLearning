@@ -62,8 +62,8 @@ char * pawn(int p)
 {
 	switch(p)
 	{
-		case -1:
-			return ";42m       ";
+		case 20:
+			return "m       ";
 		case 0:
 			return "m       ";
 		case 1:
@@ -95,11 +95,18 @@ char * pawn(int p)
 	return " ";
 }
 
+char * backColor(int p)
+{
+	if(p < 0)
+		return "42;";
+	if(p < 10)
+		return "";
+}
+
 
 void printBoard(int ** board)
 {
 	clear();
-	int isLine = 0; //tell if we are on new line of board
 	int cellcolor = 0;//0 = white & 1 = black
 	printf("\033[0m          H      G      F      E      D      C      B      A \n");
 	for(int i=0;i<8;i++)
@@ -119,17 +126,34 @@ void printBoard(int ** board)
 				{
 					if(k == 1)
 					{
-						char * c = pawn(board[i][j]);
-						if(cellcolor == 0)
-							printf("\033[47%s",c);
+						char * c = board[i][j] >= 0 ? pawn(board[i][j]) :
+							pawn(-board[i][j]);
+						if(board[i][j] == -20)
+							printf("\033[42%s",c);
 						else
-							printf("\033[0%s",c); 
+						{
+							if(board[i][j] < 0)  //mettre du rouge ici
+								printf("\033[43%s",c);
+							else
+							{
+								if(cellcolor == 0)
+									printf("\033[47%s",c);
+								else
+									printf("\033[0%s",c); 
+						}
+
+						}
 						cellcolor = cellcolor == 0 ? 1 : 0;
 					}
 					else
 					{
-						if(board[i][j] == -1)
-							printf("\033[42m       ");
+						if(board[i][j] < 0)
+						{	
+							if(board[i][j] == -20)
+								printf("\033[42m       ");
+							else
+								printf("\033[43m       ");
+						}
 						else
 						{
 							if(cellcolor == 0)

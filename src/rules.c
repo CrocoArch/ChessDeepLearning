@@ -5,7 +5,7 @@
 void pawnMove(int ** board, int i, int j, int team)
 {
     int n = team == 1 ? 1 : -1;
-	if(0<j+n && j+n<9 && (board[i][j+n]/10 != team || board[i][j+n] < 1))
+	if(0<j+n && j+n<8 && (board[i][j+n]/10 != team || board[i][j+n] < 1))
     {
 		board[i][j] = -1;
         board[i][j+n] = team*10+1;
