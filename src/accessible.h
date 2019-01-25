@@ -7,5 +7,6 @@ int horseAcc(int ** board, int x, int y, int team);
 int bishopAcc(int ** board, int x, int y, int team);
 int queenAcc(int ** board, int x, int y, int team);
 int kingAcc(int ** board, int x, int y, int team);
+int clearAcc(int ** board);
 
 #endif

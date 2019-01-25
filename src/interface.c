@@ -40,8 +40,8 @@ int **  init()
 	board[0][1] = 2;
 	board[0][2] = 3;
 	board[0][3] = 4;
-	board[0][4] = 6;
-	board[0][5] = 5;
+	board[0][4] = 5;
+	board[0][5] = 6;
 	board[0][6] = 4;
 	board[0][7] = 3;
 	board[0][8] = 2;
@@ -101,6 +101,8 @@ char * backColor(int p)
 		return "42;";
 	if(p < 10)
 		return "";
+    else
+        return "cacaBackColor";
 }
 
 

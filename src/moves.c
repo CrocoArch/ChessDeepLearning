@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "rules.h"
 #include "accessible.h"
+#include "interface.h"
 
 int moving(int ** board, int i, int j, int x, int y)
 {       
-    if(board[i][j] < 0){
+    if(board[x][y] < 0){
         board[x][y]=board[i][j];
         board[i][j]=0;
         return 1;
@@ -48,28 +49,33 @@ void turn(int ** board,int team)
         moveCheck(board,team);
     else
     {
+        //clearAcc(board);
         printf("\033[0m Which piece do you want to move?\n");
         int pos1,pos3;
         char pos2,pos4;
         scanf("%i%c",&pos1,&pos2);
+        while(0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73 ||
+                            board[pos1][73-pos2]/10 != team ){
+            printf("Wrong piece!\n");
+            printf("Please enter another piece.\n");
+            scanf("%i%c",&pos1,&pos2);
+        }
         printf("%i , %c\n",pos1,pos2);
-        if (0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73)
-            printf("Out of board!");
-        else
-        {
-            move(board,pos1,72-pos2);
+        move(board,pos1,73-pos2);
+        printBoard(board);
+        printf("\033[0m On which cell do you want to move?\n");
+        scanf("%i%c",&pos3,&pos4);
+        printf("%i , %c\n",pos3,pos4);
+        while (0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73)
+            printf("Cell not in the board!\n");
+        while(!moving(board,pos1,73-pos2,pos3,73-pos4)){
+            printf("Cell not accessible!\n");
             printf("\033[0m On which cell do you want to move?\n");
             scanf("%i%c",&pos3,&pos4);
-            printf("%i , %c\n",pos3,pos4);
-            if (0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73)
-                printf("Cell not in the board!\n");
-            while(!moving(board,pos1,72-pos2,pos3,72-pos4)){
-                printf("Cell not accessible!\n");
-                printf("\033[0m On which cell do you want to move?\n");
-                scanf("%i%c",&pos3,&pos4);
-            }   
-            printf("It's enemy turn!\n");
         }
+        clearAcc(board);
+        printBoard(board);
+        printf("It's enemy turn!\n");
     }
 }
 
