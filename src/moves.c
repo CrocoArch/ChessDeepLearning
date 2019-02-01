@@ -49,14 +49,14 @@ void turn(int ** board,int team)
         moveCheck(board,team);
     else
     {
-        //clearAcc(board);
+        clearAcc(board);
         printf("\033[0m Which piece do you want to move?\n");
         //printBoard2(board);
         int pos1,pos3;
         char pos2,pos4;
         scanf("%i%c",&pos1,&pos2);
         while(0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73 ||
-                            board[pos1][73-pos2]/10 != team ){
+            board[pos1][73-pos2]/10 != team || board[pos1][73-pos2]==0){
             printf("Wrong piece!\n");
             printf("Please enter another piece.\n");
             scanf("%i%c",&pos1,&pos2);

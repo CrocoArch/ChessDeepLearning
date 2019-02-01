@@ -20,18 +20,23 @@ int pawnAcc(int ** board, int x, int y, int team)
 {
 	if(team == 0 && (board[x+1][y] <= 0 || board[x+1][y] >= 10))
 	{
-			board[x+1][y] *= -1;
-			if(board[x+1][y] == 0)
-				board[x+1][y] = -20;
-			return 1;
+        makeAccessible(board,x+1,y);
+        if(board[x+1][y-1] > 10)
+            board[x+1][y-1] = -1*abs(board[x+1][y-1]);
+        if(board[x+1][y+1] > 10)
+            board[x+1][y+1] = -1*abs(board[x+1][y+1]);
+        return 1;
 	}		
 
 	if(team == 1 && 0<= x-1 && board[x-1][y] < 10)
 	{
-			board[x-1][y] *= -1;
-			if(board[x-1][y] == 0)
-				board[x-1][y] = -20;
-			return 1;
+		makeAccessible(board,x-1,y);
+        if(board[x-1][y-1] < 10)
+            board[x-1][y-1] = -1*abs(board[x-1][y-1]);
+        if(board[x-1][y+1] < 10)
+            board[x-1][y+1] = -1*abs(board[x-1][y+1]);
+
+        return 1;
 	}
 	
 	return 0;
@@ -252,9 +257,9 @@ int kingAcc(int ** board, int x, int y, int team)
 
 void clearAcc(int ** board)
 {
-    for(int i=0;i<9;i++)
+    for(int i=0;i<8;i++)
     {
-        for(int j=0;j<9;j++)
+        for(int j=0;j<8;j++)
         {
             if(board[i][j]==-20)
                 board[i][j] =0;
