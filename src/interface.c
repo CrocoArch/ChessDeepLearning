@@ -21,11 +21,23 @@ int ** createBoard()
 	int ** board = malloc(9 * sizeof(int *)); //malloc the board
 	for (size_t i = 0; i < 8; i++)
 	{
-		board[i] = malloc(9 * sizeof(int));
-		for(size_t j = 0; j < 8; j++)
-			board[i][j] = 0;						
+		board[i] = calloc(9, sizeof(int));					
 	}
 	return board;
+}
+
+
+void printBoard2(int ** board)
+{
+    for(int i =0;i<8;i++)
+    {
+        printf("|");
+        for(int j =1;j<9;j++)
+        {
+            printf(" %i |",board[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 int **  init()

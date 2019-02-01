@@ -45,12 +45,13 @@ int moveCheck(int ** board, int team){
 void turn(int ** board,int team)
 {
     printf("%s it's your turn!", team ? "Red":"Blue");
-    if(check(board,team))
+    if(0)//check(board,team))
         moveCheck(board,team);
     else
     {
         //clearAcc(board);
         printf("\033[0m Which piece do you want to move?\n");
+        //printBoard2(board);
         int pos1,pos3;
         char pos2,pos4;
         scanf("%i%c",&pos1,&pos2);
@@ -73,7 +74,7 @@ void turn(int ** board,int team)
             printf("\033[0m On which cell do you want to move?\n");
             scanf("%i%c",&pos3,&pos4);
         }
-        clearAcc(board);
+        //clearAcc(board);
         printBoard(board);
         printf("It's enemy turn!\n");
     }
@@ -82,10 +83,10 @@ void turn(int ** board,int team)
 void game(int ** board)
 {
     printf("White always starts!\n");
-    while(!checkANDmat(board,1)) 
+    while(1)//!checkANDmat(board,1)) 
     {
         turn(board,1);
-        if(checkANDmat(board,0))
+        if(0)//checkANDmat(board,0))
             break;
         turn(board,0);
     }

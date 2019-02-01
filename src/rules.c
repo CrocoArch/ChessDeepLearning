@@ -68,7 +68,7 @@ int * checkANDmat(int ** board, int team){
                 }
             }
         }
-        //TODO case when other pieces can eliminate the threat
+        
         return val;
     }
     else

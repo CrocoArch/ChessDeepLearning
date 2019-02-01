@@ -214,35 +214,35 @@ int queenAcc(int ** board, int x, int y, int team)
 
 int kingAcc(int ** board, int x, int y, int team)
 {
-	if(x+1 < 8 && y+1 < 9 && (board[x+1][y+1]/10 != team || 
+	if(x+1 < 9 && y+1 < 9 && (board[x+1][y+1]/10 != team || 
 				board[x+1][y+1]==0))
 		makeAccessible(board, x+1, y+1);
 	
-	if(x+1 < 8 && 0<= y-1 && y-1 < 9 && (board[x+1][y-1]/10 != team || 
+	if(x+1 < 9 && 0<= y-1 && y-1 < 9 && (board[x+1][y-1]/10 != team || 
 			board[x+1][y-1]==0))
 		makeAccessible(board, x+1, y-1);
 	
-	if(x+1 < 8 && y < 9 && (board[x+1][y]/10 != team || 
+	if(x+1 < 9 && y < 9 && (board[x+1][y]/10 != team || 
 				board[x+1][y]==0))
 			makeAccessible(board, x+1, y);
 	
-	if(x < 8 && 0<= y-1 && y-1 < 9 && (board[x][y-1]/10 != team || 
+	if(x < 9 && 0<= y-1 && y-1 < 9 && (board[x][y-1]/10 != team || 
 				board[x][y-1]==0))
 		makeAccessible(board, x, y-1);
 	
-	if(x < 8 && y+1 < 9 && (board[x][y+1]/10 != team || 
+	if(x < 9 && y+1 < 9 && (board[x][y+1]/10 != team || 
 				board[x][y+1]==0))
 		makeAccessible(board, x, y+1);
 	
-	if(0<= x-1 && x-1 < 8 && y < 9 && (board[x-1][y]/10 != team || 
+	if(0<= x-1 && x-1 < 9 && y < 9 && (board[x-1][y]/10 != team || 
 				board[x-1][y]==0))
 		makeAccessible(board, x-1, y);
 	
-	if(0<=x-1 && x-1<8 && 0<=y-1 &&  y-1<9 && (board[x-1][y-1]/10 != team || 
+	if(0<=x-1 && x-1<9 && 0<=y-1 &&  y-1<9 && (board[x-1][y-1]/10 != team || 
 				board[x-1][y-1]==0))
 		makeAccessible(board, x-1, y-1);
 
-	if(0<= x-1 && x-1 < 8 && y+1 < 9 && (board[x-1][y+1]/10 != team || 
+	if(0<= x-1 && x-1 < 9 && y+1 < 9 && (board[x-1][y+1]/10 != team || 
 				board[x-1][y+1]==0))
 		makeAccessible(board, x-1, y+1);
 
@@ -252,11 +252,14 @@ int kingAcc(int ** board, int x, int y, int team)
 
 void clearAcc(int ** board)
 {
-    for(int i=0;i<8;i++)
+    for(int i=0;i<9;i++)
     {
-        for(int j=0;j<8;j++)
+        for(int j=0;j<9;j++)
         {
-            board[i][j]=abs(board[i][j]);
+            if(board[i][j]==-20)
+                board[i][j] =0;
+            else
+                board[i][j]=abs(board[i][j]);
         }
     }
 }
