@@ -5,7 +5,9 @@
 #include "interface.h"
 
 int moving(int ** board, int i, int j, int x, int y)
-{       
+{   
+    if(x == 42)
+        return 0;
     if(board[x][y] < 0){
         board[x][y]=board[i][j];
         board[i][j]=0;
@@ -74,10 +76,13 @@ void turn(int ** board,int team)
             printf("\033[0m On which cell do you want to move?\n");
             scanf("%i%c",&pos3,&pos4);
             if(pos3 == 42){
-                turn(board,team);
                 break;
             }
         }
+        if(pos3 == 42){
+            turn(board,team);
+        }
+        
         clearAcc(board);
         printBoard(board);
         printf("It's enemy turn!\n");
