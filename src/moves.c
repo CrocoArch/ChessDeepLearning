@@ -49,20 +49,20 @@ void turn(int ** board,int team)
         moveCheck(board,team);
     else
     {
-        clearAcc(board);
+        //clearAcc(board);
         printf("\033[0m Which piece do you want to move?\n");
         //printBoard2(board);
         int pos1,pos3;
         char pos2,pos4;
         scanf("%i%c",&pos1,&pos2);
         while(0 > pos1 || pos1 > 7 || 65 > pos2 || pos2 > 73 ||
-            board[pos1][73-pos2]/10 != team || board[pos1][73-pos2]==0){
-            printf("Wrong piece!\n");
+            board[pos1][73-pos2]/10 != team || board[pos1][73-pos2]==0 ||
+            !move(board,pos1,73-pos2)){
+            printf("Wrong piece! or this piece can not move...\n");
             printf("Please enter another piece.\n");
             scanf("%i%c",&pos1,&pos2);
         }
         printf("%i , %c\n",pos1,pos2);
-        move(board,pos1,73-pos2);
         printBoard(board);
         printf("\033[0m On which cell do you want to move?\n");
         scanf("%i%c",&pos3,&pos4);
@@ -73,8 +73,12 @@ void turn(int ** board,int team)
             printf("Cell not accessible!\n");
             printf("\033[0m On which cell do you want to move?\n");
             scanf("%i%c",&pos3,&pos4);
+            if(pos3 == 42){
+                turn(board,team);
+                break;
+            }
         }
-        //clearAcc(board);
+        clearAcc(board);
         printBoard(board);
         printf("It's enemy turn!\n");
     }

@@ -18,25 +18,39 @@ void makeAccessible(int ** board, int x, int y)
 
 int pawnAcc(int ** board, int x, int y, int team)
 {
-	if(team == 0 && (board[x+1][y] <= 0 || board[x+1][y] >= 10))
-	{
-        makeAccessible(board,x+1,y);
-        if(board[x+1][y-1] > 10)
-            board[x+1][y-1] = -1*abs(board[x+1][y-1]);
-        if(board[x+1][y+1] > 10)
-            board[x+1][y+1] = -1*abs(board[x+1][y+1]);
-        return 1;
+    int acc = 0;
+	if(team == 0 && x<8)
+    {
+        if (board[x+1][y] == 0){
+            makeAccessible(board,x+1,y);
+            acc += 1;
+        }
+        if(y>0 && board[x+1][y-1] > 10){
+            makeAccessible(board,x+1,y);
+            acc +=1;
+        }
+        if(y<8 && board[x+1][y+1] > 10){
+            makeAccessible(board,x+1,y);
+            acc += 1;
+        }
+        return acc>0;
 	}		
 
-	if(team == 1 && 0<= x-1 && board[x-1][y] < 10)
-	{
-		makeAccessible(board,x-1,y);
-        if(board[x-1][y-1] < 10)
-            board[x-1][y-1] = -1*abs(board[x-1][y-1]);
-        if(board[x-1][y+1] < 10)
-            board[x-1][y+1] = -1*abs(board[x-1][y+1]);
-
-        return 1;
+	if(team == 1 && 0<= x-1)
+    {
+        if(board[x-1][y] == 0){
+		    makeAccessible(board,x-1,y);
+            acc += 1;
+        }
+        if(y>0 && board[x-1][y-1] > 0 && board[x-1][y-1]<10){
+		    makeAccessible(board,x-1,y);
+            acc += 1;
+        }
+        if(y<8 && board[x-1][y+1] > 0 && board[x-1][y+1]<10){
+		    makeAccessible(board,x-1,y);
+            acc += 1;
+        }
+        return acc>0;
 	}
 	
 	return 0;
@@ -99,7 +113,7 @@ int rookAcc(int ** board, int x, int y, int team)
 		ret++;
 	}
 
-	return ret == 0 ? 0 : 1;
+	return ret > 0;
 }
 
 int bishopAcc(int ** board, int x, int y, int team)
@@ -170,88 +184,128 @@ int bishopAcc(int ** board, int x, int y, int team)
 	}
 
 
-	return ret == 0 ? 0 : 1;
+	return ret > 0;
 
 }
 
 int horseAcc(int ** board, int x, int y, int team)
 {
+    int acc =0;
 	if(x+2 < 8 && y+1 < 9 && (board[x+2][y+1]/10 != team || 
-				board[x+2][y+1]==0))
+				board[x+2][y+1]==0)){
 		makeAccessible(board, x+2, y+1);
+        acc +=1;
+    }
+
 	
 	if(x+2 < 8 && y-1 < 9 && (board[x+2][y-1]/10 != team || 
-			board[x+2][y-1]==0))
+			board[x+2][y-1]==0)){
 		makeAccessible(board, x+2, y-1);
+        acc +=1;
+    }
 	
 	if(0<= x-2 && x-2 < 8 && y+1 < 9 && (board[x-2][y+1]/10 != team || 
-				board[x-2][y+1]==0))
+				board[x-2][y+1]==0)){
 			makeAccessible(board, x-2, y+1);
+        acc +=1;
+    }
 	
 	if(0<= x-2 && x-2 < 8 && y-1 < 9 && (board[x-2][y-1]/10 != team || 
-				board[x-2][y-1]==0))
+				board[x-2][y-1]==0)){
 		makeAccessible(board, x-2, y-1);
+        acc +=1;
+    }
 	
 	if(x+1 < 8 && y+2 < 9 && (board[x+1][y+2]/10 != team || 
-				board[x+1][y+2]==0))
+				board[x+1][y+2]==0)){
 		makeAccessible(board, x+1, y+2);
+        acc +=1;
+    }
 	
 	if(x+1 < 8 && 0<= y-2 && y-2 < 9 && (board[x+1][y-2]/10 != team || 
-				board[x+1][y-2]==0))
+				board[x+1][y-2]==0)){
 		makeAccessible(board, x+1, y-2);
+        acc +=1;
+    }
 	
 	if(0<= x-1 && x-1 < 8 && y+2 < 9 && (board[x-1][y+2]/10 != team || 
-				board[x-1][y+2]==0))
+				board[x-1][y+2]==0)){
 		makeAccessible(board, x-1, y+2);
+        acc +=1;
+    }
 
 	if(0<= x-1 && x-1<8 && 0<= y-2 && y-2<9 && (board[x-1][y-2]/10 != team || 
-				board[x-1][y-2]==0))
+				board[x-1][y-2]==0)){
 		makeAccessible(board, x-1, y-2);
+        acc +=1;
+    }
 
-	return 1;
+	return acc > 0;
 }
 
 int queenAcc(int ** board, int x, int y, int team)
 {
-	int ret = bishopAcc(board, x, y, team) && rookAcc(board, x ,y, team);
-	return ret;
+	int ret1 = bishopAcc(board, x, y, team);
+    int ret2 = rookAcc(board, x ,y, team);
+	return ret1+ret2>0;
 }
 
 int kingAcc(int ** board, int x, int y, int team)
 {
-	if(x+1 < 9 && y+1 < 9 && (board[x+1][y+1]/10 != team || 
-				board[x+1][y+1]==0))
+    int acc = 0;
+    if(8<x || x<0 || 9<y || y<0){
+        return 0;
+    }
+
+	if(x+1 < 8 && y+1 < 9 && (board[x+1][y+1]/10 != team || 
+				board[x+1][y+1]==0)){
 		makeAccessible(board, x+1, y+1);
+        acc +=1;
+    }
 	
-	if(x+1 < 9 && 0<= y-1 && y-1 < 9 && (board[x+1][y-1]/10 != team || 
-			board[x+1][y-1]==0))
+	if(x+1 < 8 && 0<= y-1 && (board[x+1][y-1]/10 != team || 
+			board[x+1][y-1]==0)){
 		makeAccessible(board, x+1, y-1);
+        acc +=1;
+    }
 	
-	if(x+1 < 9 && y < 9 && (board[x+1][y]/10 != team || 
-				board[x+1][y]==0))
-			makeAccessible(board, x+1, y);
+	if(x+1 < 8 && (board[x+1][y]/10 != team || 
+				board[x+1][y]==0)){
+	    makeAccessible(board, x+1, y);
+        acc +=1;
+    }
 	
-	if(x < 9 && 0<= y-1 && y-1 < 9 && (board[x][y-1]/10 != team || 
-				board[x][y-1]==0))
+	if(0<= y-1 && (board[x][y-1]/10 != team || 
+				board[x][y-1]==0)){
 		makeAccessible(board, x, y-1);
+        acc +=1;
+    }
 	
-	if(x < 9 && y+1 < 9 && (board[x][y+1]/10 != team || 
-				board[x][y+1]==0))
+	if(y+1 < 9 && (board[x][y+1]/10 != team || 
+				board[x][y+1]==0)){
 		makeAccessible(board, x, y+1);
+        acc +=1;
+    }
 	
-	if(0<= x-1 && x-1 < 9 && y < 9 && (board[x-1][y]/10 != team || 
-				board[x-1][y]==0))
+	if(0<= x-1 && (board[x-1][y]/10 != team || 
+				board[x-1][y]==0)){
 		makeAccessible(board, x-1, y);
+        acc +=1;
+    }
 	
-	if(0<=x-1 && x-1<9 && 0<=y-1 &&  y-1<9 && (board[x-1][y-1]/10 != team || 
-				board[x-1][y-1]==0))
+	if(0<=x-1 && 0<=y-1 && (board[x-1][y-1]/10 != team || 
+				board[x-1][y-1]==0)){
 		makeAccessible(board, x-1, y-1);
+        acc +=1;
+    }
 
-	if(0<= x-1 && x-1 < 9 && y+1 < 9 && (board[x-1][y+1]/10 != team || 
-				board[x-1][y+1]==0))
+	if(0<= x-1 && y+1 < 9 && (board[x-1][y+1]/10 != team || 
+				board[x-1][y+1]==0)){
 		makeAccessible(board, x-1, y+1);
+        acc +=1;
+    }
 
-	return 1;
+	return acc>0;
 
 }
 
@@ -259,7 +313,7 @@ void clearAcc(int ** board)
 {
     for(int i=0;i<8;i++)
     {
-        for(int j=0;j<8;j++)
+        for(int j=0;j<9;j++)
         {
             if(board[i][j]==-20)
                 board[i][j] =0;
