@@ -21,6 +21,6 @@ all: main
 main: ${OBJ}
 
 clean:
-	rm -f ${OBJ} ${DEP} main
+	rm -f ${OBJ} ${DEP}
 
 # END

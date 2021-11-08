@@ -7,13 +7,12 @@
 int searchKing(int ** board, int team){
     int i,j;
     i = 0;
-    j = 0;
+    j = 1;
     while(i<8 && board[i][j] != team*10+6){
+        j = 1;
         while(j<8 && board[i][j] != team*10+6){
             j+=1;
         }
-        if(j== 8)
-            break;
         i+=1;
     }
     return i*10+j;
@@ -21,18 +20,18 @@ int searchKing(int ** board, int team){
 
 int check(int ** board, int team){
     int pos = searchKing(board, team);
+    printf("%s king is %i , %c", team ? "Red":"Blue",pos/10,73-pos%10);
     team = team ? 0:1;
     for(int i =0;i<8;i++){
         for(int j = 0;j<8; j++){
             if (board[i][j]/10 == team)
                 move(board,i,j);
+            if (board[pos/10][pos%10] < 0)
+                return 1;
+            clearAcc(board);
         }
     }
-
-    if(board[pos/10][pos%10] < 0)
-        return 1;
-    else
-        return 0;
+    return 0;
 }
 
 int * checkANDmat(int ** board, int team){

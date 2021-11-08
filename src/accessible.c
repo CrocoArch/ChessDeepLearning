@@ -65,6 +65,8 @@ int rookAcc(int ** board, int x, int y, int team)
 	while((i >= 0 && i < 8) && (board[i][j] == 0 || board[i][j]/10 != team) &&
 			enemy ==0)
 	{
+        if(board[i][j] != 0)
+            enemy = 1;
 		board[i][j] *= -1;
 		if(board[i][j] == 0)
 			board[i][j] = -20;
@@ -78,6 +80,8 @@ int rookAcc(int ** board, int x, int y, int team)
 	enemy = 0;
 	while((i >= 0 && i < 8) && (board[i][j] == 0 || board[i][j]/10 != team))
 	{
+        if(board[i][j] != 0)
+            enemy = 1;
 		board[i][j] *= -1;
 		if(board[i][j] == 0)
 			board[i][j] = -20;
@@ -91,6 +95,8 @@ int rookAcc(int ** board, int x, int y, int team)
 	enemy = 0;
 	while((j >= 1 && j < 9) && (board[i][j] == 0 || board[i][j]/10 != team))
 	{
+        if(board[i][j] != 0)
+            enemy = 1;
 		board[i][j] *= -1;
 		if(board[i][j] == 0)
 			board[i][j] = -20;
@@ -104,6 +110,8 @@ int rookAcc(int ** board, int x, int y, int team)
 	enemy = 0;
 	while((j >= 1 && j < 9) && (board[i][j] == 0 || board[i][j]/10 != team))
 	{
+        if(board[i][j] != 0)
+            enemy = 1;
 		board[i][j] *= -1;
 		if(board[i][j] == 0)
 			board[i][j] = -20;
@@ -125,6 +133,7 @@ int bishopAcc(int ** board, int x, int y, int team)
 	while(i >= 0 && i < 8 && j >= 1 && j < 9
 			&& (board[i][j] == 0 || board[i][j]/10 != team) && enemy ==0)
 	{
+		board[i][j] *= -1;
 		board[i][j] *= -1;
 		if(board[i][j] == 0)
 			board[i][j] = -20;

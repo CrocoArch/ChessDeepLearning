@@ -6,21 +6,17 @@ CFLAGS= -Wall -Wextra -std=c99 -O2
 LDFLAGS=
 LDLIBS=
 
-# You should at least create the "insert_sort.c"
-# and "insert_sort.h" files in order to compile.
-# (These files can be empty.)
 
-SRC= # sourcefiles here  
-OBJ= $(@./obj)${SRC:.c=.o}
-DEP= ${SRC:.c=.d}
+SRC= ${wildcard src/*.c} 
+OBJ= ${wildcard src/*.o}
 
 all: main
+	${CC} src/*.o -o $^
 
--include ${DEP}
-
-main: ${OBJ}
+main:
+	${CC} -c ${CFLAGS} ${SRC} 
 
 clean:
-	rm -f ${OBJ} ${DEP} main
+	rm -f src/*.o *.o ${DEP} src/main src/interface
 
 # END

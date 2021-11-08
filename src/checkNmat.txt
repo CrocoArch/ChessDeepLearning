@@ -1,0 +1,6 @@
+- Verifier toutes les lignes de vies
+- Avant de bouger n'importe qu'elle piece ou meme de proposer les cases 
+  accessible verifier si ca met le roi en danger
+- Apres move de l'enemi verifier le check et signaler le danger
+- Verifier que le move protege du danger
+- Les cases accessibles au roi doivent etre verifiees avant d'etre accessibles 
